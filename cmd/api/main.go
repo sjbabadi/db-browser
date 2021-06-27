@@ -8,9 +8,13 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
+	"github.com/sjbabadi/db-browser/pkg/models/postgres"
 )
 
-type application struct{}
+type application struct {
+	genreModel *postgres.GenreModel
+}
 
 func main() {
 	app := &application{}
@@ -18,8 +22,10 @@ func main() {
 	err := godotenv.Load()
 	app.check(err)
 
-	//db, err := app.openDB()
+	db, err := app.openDB()
 	app.check(err)
+
+	app.genreModel = &postgres.GenreModel{DB: db}
 
 	port := os.Getenv("PORT")
 	portStr := fmt.Sprintf(":%s", port)
