@@ -14,6 +14,7 @@ import (
 
 type application struct {
 	genreModel *postgres.GenreModel
+	trackModel *postgres.TrackModel
 }
 
 func main() {
@@ -26,6 +27,7 @@ func main() {
 	app.check(err)
 
 	app.genreModel = &postgres.GenreModel{DB: db}
+	app.trackModel = &postgres.TrackModel{DB: db}
 
 	port := os.Getenv("PORT")
 	portStr := fmt.Sprintf(":%s", port)
